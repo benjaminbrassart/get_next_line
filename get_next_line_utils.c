@@ -6,7 +6,7 @@
 /*   By: bbrassar <bbrassar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 10:24:28 by bbrassar          #+#    #+#             */
-/*   Updated: 2021/06/07 11:02:19 by bbrassar         ###   ########.fr       */
+/*   Updated: 2021/06/07 11:21:18 by bbrassar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,7 @@ char	*ft_strchr(char const *s, int c)
 			return ((char *)s);
 		++s;
 	}
+	if (c == 0)
+		return ((char *)s);
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: bbrassar <bbrassar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 10:24:28 by bbrassar          #+#    #+#             */
-/*   Updated: 2021/06/07 10:30:12 by bbrassar         ###   ########.fr       */
+/*   Updated: 2021/06/07 11:02:19 by bbrassar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,18 @@ void	*ft_memset(void *s, int c, size_t n)
 	while (n--)
 		*d++ = ch;
 	return (s);
+}
+
+char	*ft_strchr(char const *s, int c)
+{
+	unsigned char		ch;
+
+	ch = c;
+	while (*s)
+	{
+		if ((unsigned char)*s == (unsigned char)c)
+			return ((char *)s);
+		++s;
+	}
+	return (NULL);
 }

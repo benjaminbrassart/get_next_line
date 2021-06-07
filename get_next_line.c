@@ -6,7 +6,7 @@
 /*   By: bbrassar <bbrassar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 10:12:29 by bbrassar          #+#    #+#             */
-/*   Updated: 2021/06/07 19:00:20 by bbrassar         ###   ########.fr       */
+/*   Updated: 2021/06/07 19:11:41 by bbrassar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,20 +49,25 @@ int	gnl_copy_until_line_break(char **line, char *buffer, char **rest)
 	if (buffer != *rest)
 		gnl_free(rest, 0);
 	i = 0;
+	while (buffer[i] && buffer[i] != '\n')
+		++i;
+	/*
 	diff = ft_strchr(buffer, '\n');
 	if (diff)
 		i = diff - buffer;
 	else
 		while (buffer[i])
 			++i;
+	*/
 	gnl_strjoin(line, buffer, i);
-	if (diff)
+	if (buffer[i])
 	{
-		*rest = ft_strdup(buffer + i + 1);
+		diff = ft_strdup(buffer + i + 1);
+		free(*rest);
+		*rest = diff;
 		return (1);
 	}
-	*rest = NULL;
-	return (0);
+	return (gnl_free(rest, 0));
 }
 
 int	get_next_line(int fd, char **line)

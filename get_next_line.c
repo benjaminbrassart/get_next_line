@@ -6,7 +6,7 @@
 /*   By: bbrassar <bbrassar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 10:12:29 by bbrassar          #+#    #+#             */
-/*   Updated: 2021/06/07 19:28:40 by bbrassar         ###   ########.fr       */
+/*   Updated: 2021/06/07 19:32:34 by bbrassar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,5 @@ int	get_next_line(int fd, char **line)
 			return (gnl_free(&buffer, 1));
 		free(buffer);
 	}
-	return (0);
+	return (gnl_free(&rest, 0));
 }

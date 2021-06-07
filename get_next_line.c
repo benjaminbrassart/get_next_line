@@ -6,7 +6,7 @@
 /*   By: bbrassar <bbrassar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 10:12:29 by bbrassar          #+#    #+#             */
-/*   Updated: 2021/06/07 18:56:20 by bbrassar         ###   ########.fr       */
+/*   Updated: 2021/06/07 19:00:20 by bbrassar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,13 @@ int	get_next_line(int fd, char **line)
 		ft_memset(buffer, 0, BUFFER_SIZE + 1);
 		r_bytes = read(fd, buffer, BUFFER_SIZE);
 		if (r_bytes == -1)
-			return (gnl_free(&buffer, -1));
+		{
+			free(buffer);
+			return (-1);
+		}
 		if (gnl_copy_until_line_break(line, buffer, &rest))
-			return (1);
-		gnl_free(&buffer, 0);
+			return (gnl_free(&buffer, 1));
+		free(buffer);
 	}
 	return (0);
 }

@@ -6,13 +6,20 @@
 /*   By: bbrassar <bbrassar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 10:12:29 by bbrassar          #+#    #+#             */
-/*   Updated: 2021/06/07 16:05:10 by bbrassar         ###   ########.fr       */
+/*   Updated: 2021/06/07 18:51:29 by bbrassar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <unistd.h>
 #include "get_next_line.h"
+
+int	gnl_free(char **buffer, int rv)
+{
+	free(*buffer);
+	*buffer = NULL;
+	return (rv);
+}
 
 int	gnl_strjoin(char **line, char *s, size_t n)
 {
@@ -39,10 +46,11 @@ int	gnl_copy_until_line_break(char **line, char *buffer, char **rest)
 	char	*diff;
 	size_t	i;
 
-	free(*rest);
+	if (buffer != *rest)
+		free(*rest);
 	i = 0;
 	diff = ft_strchr(buffer, '\n');
-	if (diff && diff[1])
+	if (diff)
 		i = diff - buffer;
 	else
 		while (buffer[i])
@@ -60,20 +68,25 @@ int	gnl_copy_until_line_break(char **line, char *buffer, char **rest)
 int	get_next_line(int fd, char **line)
 {
 	static char	*rest = NULL;
-	char		buffer[BUFFER_SIZE + 1];
+	char		*buffer;
 	int			r_bytes;
 
-	if (rest && *rest)
+	if (rest)
 		if (gnl_copy_until_line_break(line, rest, &rest))
 			return (1);
 	r_bytes = 1;
 	while (r_bytes)
 	{
-		r_bytes = read(fd, ft_memset(buffer, 0, BUFFER_SIZE + 1), BUFFER_SIZE);
-		if (r_bytes == -1)
+		buffer = malloc(sizeof (char) * (BUFFER_SIZE + 1));
+		if (!buffer)
 			return (-1);
+		ft_memset(buffer, 0, BUFFER_SIZE + 1);
+		r_bytes = read(fd, buffer, BUFFER_SIZE);
+		if (r_bytes == -1)
+			return (gnl_free(&buffer, -1));
 		if (gnl_copy_until_line_break(line, buffer, &rest))
 			return (1);
+		gnl_free(&buffer, 0);
 	}
 	return (0);
 }

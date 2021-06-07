@@ -6,7 +6,7 @@
 /*   By: bbrassar <bbrassar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 10:12:29 by bbrassar          #+#    #+#             */
-/*   Updated: 2021/06/07 18:51:29 by bbrassar         ###   ########.fr       */
+/*   Updated: 2021/06/07 18:56:20 by bbrassar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	gnl_copy_until_line_break(char **line, char *buffer, char **rest)
 	size_t	i;
 
 	if (buffer != *rest)
-		free(*rest);
+		gnl_free(rest, 0);
 	i = 0;
 	diff = ft_strchr(buffer, '\n');
 	if (diff)

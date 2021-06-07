@@ -6,7 +6,7 @@
 /*   By: bbrassar <bbrassar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 10:12:29 by bbrassar          #+#    #+#             */
-/*   Updated: 2021/06/07 10:55:08 by bbrassar         ###   ########.fr       */
+/*   Updated: 2021/06/07 16:05:10 by bbrassar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,30 +28,52 @@ int	gnl_strjoin(char **line, char *s, size_t n)
 		ft_memmove(new, *line, i);
 		ft_memmove(new + i, s, n);
 		new[i + n] = 0;
-		free(*line);
 		*line = new;
 		return (1);
 	}
 	return (0);
 }
 
-/*
+int	gnl_copy_until_line_break(char **line, char *buffer, char **rest)
+{
+	char	*diff;
+	size_t	i;
+
+	free(*rest);
+	i = 0;
+	diff = ft_strchr(buffer, '\n');
+	if (diff && diff[1])
+		i = diff - buffer;
+	else
+		while (buffer[i])
+			++i;
+	gnl_strjoin(line, buffer, i);
+	if (diff)
+	{
+		*rest = ft_strdup(buffer + i + 1);
+		return (1);
+	}
+	*rest = NULL;
+	return (0);
+}
+
 int	get_next_line(int fd, char **line)
 {
-	static char	buffer[BUFFER_SIZE + 1];
-	int			bytes;
+	static char	*rest = NULL;
+	char		buffer[BUFFER_SIZE + 1];
+	int			r_bytes;
 
-	if (!(line && BUFFER_SIZE > 0))
-		return (-1);
-	free(*line);
-	bytes = 1;
-	while (bytes)
+	if (rest && *rest)
+		if (gnl_copy_until_line_break(line, rest, &rest))
+			return (1);
+	r_bytes = 1;
+	while (r_bytes)
 	{
-		ft_memset(buffer, 0, BUFFER_SIZE + 1);
-		bytes = read(fd, buffer, BUFFER_SIZE);
-		if (bytes == -1)
+		r_bytes = read(fd, ft_memset(buffer, 0, BUFFER_SIZE + 1), BUFFER_SIZE);
+		if (r_bytes == -1)
 			return (-1);
+		if (gnl_copy_until_line_break(line, buffer, &rest))
+			return (1);
 	}
 	return (0);
 }
-*/

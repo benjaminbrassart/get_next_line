@@ -6,10 +6,11 @@
 /*   By: bbrassar <bbrassar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 10:24:28 by bbrassar          #+#    #+#             */
-/*   Updated: 2021/06/07 11:21:18 by bbrassar         ###   ########.fr       */
+/*   Updated: 2021/06/07 16:03:52 by bbrassar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "get_next_line.h"
 
 void	*ft_memmove(void *dst, void const *src, size_t n)
@@ -58,4 +59,21 @@ char	*ft_strchr(char const *s, int c)
 	if (c == 0)
 		return ((char *)s);
 	return (NULL);
+}
+
+char	*ft_strdup(char const *s)
+{
+	size_t	i;
+	char	*str;
+
+	i = 0;
+	while (s[i])
+		++i;
+	str = malloc(sizeof (char) * (i + 1));
+	if (str)
+	{
+		ft_memmove(str, s, i);
+		str[i] = 0;
+	}
+	return (str);
 }

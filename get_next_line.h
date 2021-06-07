@@ -6,7 +6,7 @@
 /*   By: bbrassar <bbrassar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 10:11:48 by bbrassar          #+#    #+#             */
-/*   Updated: 2021/06/07 11:00:16 by bbrassar         ###   ########.fr       */
+/*   Updated: 2021/06/07 16:03:35 by bbrassar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 
 int		gnl_strjoin(char **line, char *s, size_t n);
 
+int		gnl_copy_until_line_break(char **line, char *buffer, char **rest);
+
 int		get_next_line(int fd, char **line);
 
 void	*ft_memmove(void *dst, void const *src, size_t n);
@@ -28,5 +30,7 @@ void	*ft_memmove(void *dst, void const *src, size_t n);
 void	*ft_memset(void *s, int c, size_t n);
 
 char	*ft_strchr(char const *s, int c);
+
+char	*ft_strdup(char const *s);
 
 #endif

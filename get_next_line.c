@@ -6,7 +6,7 @@
 /*   By: bbrassar <bbrassar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 15:14:39 by bbrassar          #+#    #+#             */
-/*   Updated: 2021/06/08 16:17:35 by bbrassar         ###   ########.fr       */
+/*   Updated: 2021/06/08 16:39:44 by bbrassar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int	gnl_join(char **line, char *buffer, size_t n)
 	s = malloc(i + n + 1);
 	if (s)
 	{
-		gnl_free(line, 0);
 		ft_memmove(s, *line, i);
 		ft_memmove(s + i, buffer, n);
 		s[i + n] = 0;

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: bbrassar <bbrassar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/07 10:12:29 by bbrassar          #+#    #+#             */
-/*   Updated: 2021/06/07 19:32:34 by bbrassar         ###   ########.fr       */
+/*   Created: 2021/06/08 15:14:39 by bbrassar          #+#    #+#             */
+/*   Updated: 2021/06/08 15:55:14 by bbrassar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,30 @@
 #include <unistd.h>
 #include "get_next_line.h"
 
-int	gnl_free(char **buffer, int rv)
+int	gnl_free(char **p_str, int rv)
 {
-	free(*buffer);
-	*buffer = NULL;
+	free(*p_str);
+	*p_str = NULL;
 	return (rv);
 }
 
-int	gnl_strjoin(char **line, char *s, size_t n)
+int	gnl_join(char **line, char *buffer, size_t n)
 {
-	char	*new;
 	size_t	i;
+	char	*s;
 
 	i = 0;
 	while (*line && (*line)[i])
 		++i;
-	new = malloc(i + n + 1);
-	if (new)
+	s = malloc(i + n + 1);
+	if (s)
 	{
-		ft_memmove(new, *line, i);
-		ft_memmove(new + i, s, n);
-		new[i + n] = 0;
-		*line = new;
+		gnl_free(line, 0);
+		ft_memmove(s, *line, i);
+		ft_memmove(s + i, buffer, n);
+		s[i + n] = 0;
+		free(*line);
+		*line = s;
 		return (1);
 	}
 	return (0);
@@ -43,42 +45,42 @@ int	gnl_strjoin(char **line, char *s, size_t n)
 
 int	gnl_copy_until_line_break(char **line, char *buffer, char **rest)
 {
-	char	*diff;
 	size_t	i;
 
-	*line = NULL;
 	i = 0;
 	while (buffer[i] && buffer[i] != '\n')
 		++i;
-	gnl_strjoin(line, buffer, i);
-	if (buffer[i])
+	gnl_join(line, buffer, i);
+	free(*rest);
+	if (buffer[i]) // copy in *line until the \n that was found, and put what's after in *rest
 	{
-		diff = ft_strdup(buffer + i + 1);
-		free(*rest);
-		*rest = diff;
+		*rest = ft_strdup(buffer + i + 1);
 		return (1);
 	}
-	return (gnl_free(rest, 0));
+	*rest = NULL;
+	return (0);
 }
 
 int	get_next_line(int fd, char **line)
 {
 	static char	*rest = NULL;
 	char		*buffer;
-	int			r_bytes;
+	int			bytes;
 
+	*line = NULL;
 	if (rest)
-		if (gnl_copy_until_line_break(line, rest, &rest))
-			return (1);
-	r_bytes = 1;
-	while (r_bytes)
+	{
+		buffer = ft_strdup(rest);
+		if (gnl_copy_until_line_break(line, buffer, &rest))
+			return (gnl_free(&buffer, 1));
+		free(buffer);
+	}
+	bytes = 1;
+	while (bytes)
 	{
 		buffer = malloc(sizeof (char) * (BUFFER_SIZE + 1));
-		if (!buffer)
-			return (-1);
-		ft_memset(buffer, 0, BUFFER_SIZE + 1);
-		r_bytes = read(fd, buffer, BUFFER_SIZE);
-		if (r_bytes == -1)
+		bytes = read(fd, ft_memset(buffer, 0, BUFFER_SIZE + 1), BUFFER_SIZE);
+		if (bytes == -1)
 			return (gnl_free(&buffer, -1));
 		if (gnl_copy_until_line_break(line, buffer, &rest))
 			return (gnl_free(&buffer, 1));

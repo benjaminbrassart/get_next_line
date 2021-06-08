@@ -6,7 +6,7 @@
 /*   By: bbrassar <bbrassar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 10:11:48 by bbrassar          #+#    #+#             */
-/*   Updated: 2021/06/07 16:03:35 by bbrassar         ###   ########.fr       */
+/*   Updated: 2021/06/08 11:38:04 by bbrassar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,6 @@
 # endif
 
 # include <string.h>
-
-int		gnl_strjoin(char **line, char *s, size_t n);
-
-int		gnl_copy_until_line_break(char **line, char *buffer, char **rest);
 
 int		get_next_line(int fd, char **line);
 

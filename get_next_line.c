@@ -6,7 +6,7 @@
 /*   By: bbrassar <bbrassar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 15:14:39 by bbrassar          #+#    #+#             */
-/*   Updated: 2021/06/08 15:55:14 by bbrassar         ###   ########.fr       */
+/*   Updated: 2021/06/08 16:17:35 by bbrassar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	gnl_copy_until_line_break(char **line, char *buffer, char **rest)
 		++i;
 	gnl_join(line, buffer, i);
 	free(*rest);
-	if (buffer[i]) // copy in *line until the \n that was found, and put what's after in *rest
+	if (buffer[i])
 	{
 		*rest = ft_strdup(buffer + i + 1);
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: bbrassar <bbrassar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 10:24:28 by bbrassar          #+#    #+#             */
-/*   Updated: 2021/06/07 16:36:21 by bbrassar         ###   ########.fr       */
+/*   Updated: 2021/06/09 15:39:53 by bbrassar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	*ft_memset(void *s, int c, size_t n)
 
 	d = s;
 	ch = c;
-	while (n--)
+	while (d && n--)
 		*d++ = ch;
 	return (s);
 }

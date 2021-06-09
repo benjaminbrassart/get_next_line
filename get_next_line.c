@@ -6,7 +6,7 @@
 /*   By: bbrassar <bbrassar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 15:14:39 by bbrassar          #+#    #+#             */
-/*   Updated: 2021/06/08 16:39:44 by bbrassar         ###   ########.fr       */
+/*   Updated: 2021/06/09 16:51:15 by bbrassar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,10 @@ int	gnl_copy_until_line_break(char **line, char *buffer, char **rest)
 	if (buffer[i])
 	{
 		*rest = ft_strdup(buffer + i + 1);
+		free(buffer);
 		return (1);
 	}
+	free(buffer);
 	*rest = NULL;
 	return (0);
 }
@@ -71,19 +73,17 @@ int	get_next_line(int fd, char **line)
 	{
 		buffer = ft_strdup(rest);
 		if (gnl_copy_until_line_break(line, buffer, &rest))
-			return (gnl_free(&buffer, 1));
-		free(buffer);
+			return (1);
 	}
 	bytes = 1;
-	while (bytes)
+	while (bytes > 0)
 	{
 		buffer = malloc(sizeof (char) * (BUFFER_SIZE + 1));
 		bytes = read(fd, ft_memset(buffer, 0, BUFFER_SIZE + 1), BUFFER_SIZE);
 		if (bytes == -1)
-			return (gnl_free(&buffer, -1));
-		if (gnl_copy_until_line_break(line, buffer, &rest))
-			return (gnl_free(&buffer, 1));
-		free(buffer);
+			free(buffer);
+		else if (gnl_copy_until_line_break(line, buffer, &rest))
+			return (1);
 	}
-	return (gnl_free(&rest, 0));
+	return (bytes);
 }

@@ -6,7 +6,7 @@
 /*   By: bbrassar <bbrassar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 15:14:39 by bbrassar          #+#    #+#             */
-/*   Updated: 2021/06/09 18:10:30 by bbrassar         ###   ########.fr       */
+/*   Updated: 2021/06/09 21:08:44 by bbrassar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,31 +77,3 @@ int	get_next_line(int fd, char **line)
 	}
 	return (gnl_remove_fd(&head, fd, bytes));
 }
-
-/*
-int	_get_next_line(int fd, char **line)
-{
-	static char	*rest = NULL;
-	char		*buffer;
-	int			bytes;
-
-	bytes = 1;
-	*line = NULL;
-	if (rest)
-		if (gnl_copy_until_line_break(line, ft_strdup(rest), &rest))
-			return (1);
-	while (bytes > 0)
-	{
-		buffer = malloc(sizeof (char) * (BUFFER_SIZE + 1));
-		bytes = read(fd, ft_memset(buffer, 0, BUFFER_SIZE + 1), BUFFER_SIZE);
-		if (bytes == -1)
-		{
-			free(buffer);
-			return (-1);
-		}
-		else if (gnl_copy_until_line_break(line, buffer, &rest))
-			return (1);
-	}
-	return (bytes);
-}
-*/

@@ -6,7 +6,7 @@
 /*   By: bbrassar <bbrassar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 15:14:39 by bbrassar          #+#    #+#             */
-/*   Updated: 2021/06/09 18:10:45 by bbrassar         ###   ########.fr       */
+/*   Updated: 2021/06/16 19:53:23 by bbrassar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ int	get_next_line(int fd, char **line)
 	char		*buffer;
 	int			bytes;
 
+	if (line == NULL || BUFFER_SIZE < 1)
+		return (-1);
 	bytes = 1;
 	*line = NULL;
 	if (rest)

@@ -6,7 +6,7 @@
 /*   By: bbrassar <bbrassar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 15:14:39 by bbrassar          #+#    #+#             */
-/*   Updated: 2021/06/09 21:08:44 by bbrassar         ###   ########.fr       */
+/*   Updated: 2021/06/16 19:53:58 by bbrassar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ int	get_next_line(int fd, char **line)
 	char				*buffer;
 	int					bytes;
 
+	if (line == NULL || BUFFER_SIZE < 1)
+		return (-1);
 	list = gnl_find_or_create_fd(&head, fd);
 	bytes = 1;
 	*line = NULL;
